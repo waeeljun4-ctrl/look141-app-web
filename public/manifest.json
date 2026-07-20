@@ -1,0 +1,29 @@
+{
+  "name": "look.141 — أزياء وأحذية",
+  "short_name": "look.141",
+  "description": "متجر أزياء وأحذية أونلاين — ملابس، أحذية، شنط بأفضل الماركات",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F5F1EA",
+  "theme_color": "#B67D62",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "categories": ["shopping", "fashion"]
+}
