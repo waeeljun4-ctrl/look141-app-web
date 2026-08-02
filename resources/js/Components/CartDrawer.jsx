@@ -39,9 +39,9 @@ export default function CartDrawer() {
         setCouponChecking(false);
     }
 
-    function showToast(msg) {
+    function showToast(msg, duration = 3000) {
         setToast({ show: true, msg });
-        setTimeout(() => setToast({ show: false, msg: '' }), 3000);
+        setTimeout(() => setToast({ show: false, msg: '' }), duration);
     }
 
     function variantLabel(item) {
@@ -78,7 +78,7 @@ export default function CartDrawer() {
 
         setLoading(true);
         try {
-            await axios.post('/api/orders', {
+            const { data } = await axios.post('/api/orders', {
                 customer_name:  form.name,
                 customer_phone: waNumber,
                 address:        `${form.city} — ${form.address}`,
@@ -87,7 +87,11 @@ export default function CartDrawer() {
                 total,
                 coupon_code: coupon?.code || null,
             });
-            showToast(t('successOrder'));
+            if (data.account_created) {
+                showToast(`${t('successOrder')} — أنشأنا لك حساب تلقائياً، رقم هاتفك هو كلمة السر لتسجيل الدخول لاحقاً 🔑`, 7000);
+            } else {
+                showToast(t('successOrder'));
+            }
             clear();
             setOpen(false);
             setForm({ name: '', phone: '', city: '', address: '', notes: '' });
