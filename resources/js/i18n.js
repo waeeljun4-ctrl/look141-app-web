@@ -44,6 +44,21 @@ const ar = {
     wishlistTitle: 'المفضلة',
     wishlistEmpty: 'لسا ما ضفتي شي للمفضلة',
 
+    dashboardTooltip: 'لوحة التحكم',
+    loginTooltip: 'تسجيل الدخول',
+    logout: '🚪 تسجيل الخروج',
+    soldOutLabel: 'نفذت الكمية',
+    lowStockLabel: (n) => `⚠️ باقي ${n} فقط!`,
+    lowStockPiecesLabel: (n) => `⚠️ باقي ${n} قطع فقط!`,
+    invalidCoupon: 'كود الخصم غير صالح',
+    accountCreatedNote: 'أنشأنا لك حساب تلقائياً، رقم هاتفك هو كلمة السر لتسجيل الدخول لاحقاً 🔑',
+    privateCouponLabel: (typeIsPercent, value) => `🎁 عندك خصم خاص ${typeIsPercent ? `${value}%` : `${value}₪`}!`,
+    activate: 'تفعيل',
+    couponAppliedLabel: (code, discount) => `🎟️ ${code} — خصم ${discount}₪`,
+    couponPlaceholder: 'كود الخصم (اختياري)',
+    apply: 'تطبيق',
+    storeTitle: 'المتجر',
+
     installTitle: 'ثبّت تطبيق look.141',
     installShareLabel: 'مشاركة',
     installIOSPrefix: 'اضغط',
@@ -84,7 +99,7 @@ const ar = {
 
 const he = {
     dir: 'rtl',
-    topBanner: 'משלוח מהיר לכל אזורי הגדה',
+    topBanner: 'משלוח מהיר לכל אזורי ישראל',
     searchPlaceholder: 'חפשו מוצר או מותג...',
     allProducts: 'כל המוצרים',
     categoriesLabel: 'קטגוריות',
@@ -128,6 +143,21 @@ const he = {
     wishlistTitle: 'מועדפים',
     wishlistEmpty: 'עדיין לא הוספת פריטים למועדפים',
 
+    dashboardTooltip: 'לוח בקרה',
+    loginTooltip: 'התחברות',
+    logout: '🚪 התנתקות',
+    soldOutLabel: 'אזל מהמלאי',
+    lowStockLabel: (n) => `⚠️ נשארו רק ${n}!`,
+    lowStockPiecesLabel: (n) => `⚠️ נשארו רק ${n} יחידות!`,
+    invalidCoupon: 'קוד ההנחה לא תקף',
+    accountCreatedNote: 'יצרנו לך חשבון אוטומטית, מספר הטלפון שלך הוא הסיסמה להתחברות בהמשך 🔑',
+    privateCouponLabel: (typeIsPercent, value) => `🎁 יש לך הנחה מיוחדת ${typeIsPercent ? `${value}%` : `${value}₪`}!`,
+    activate: 'הפעלה',
+    couponAppliedLabel: (code, discount) => `🎟️ ${code} — הנחה ${discount}₪`,
+    couponPlaceholder: 'קוד הנחה (אופציונלי)',
+    apply: 'החל',
+    storeTitle: 'החנות',
+
     installTitle: 'התקינו את אפליקציית look.141',
     installShareLabel: 'שיתוף',
     installIOSPrefix: 'לחצו על',
@@ -149,7 +179,7 @@ const he = {
     faqs: [
         { q: 'איך אדע מה המידה הנכונה שלי?', a: 'לכל מוצר יש טבלת מידות — אם אתם בין שתי מידות בחרו בגדולה. אפשר גם ליצור קשר בוואטסאפ ונעזור לכם.' },
         { q: 'מה מדיניות ההחלפה?', a: 'ניתן להחליף כל פריט תוך 3 ימים מקבלתו, בתנאי שהוא במצבו המקורי ולא נלבש.' },
-        { q: 'כמה זמן לוקח המשלוח?', a: 'משלוח לכל אזורי הגדה תוך 1-3 ימי עסקים.' },
+        { q: 'כמה זמן לוקח המשלוח?', a: 'משלוח לכל אזורי ישראל תוך 1-3 ימי עסקים.' },
         { q: 'האם המחירים כוללים משלוח?', a: 'דמי המשלוח מחושבים לפי האזור ומתווספים באישור ההזמנה.' },
     ],
 
@@ -157,12 +187,12 @@ const he = {
         { icon: '🔄', title: 'החלפה קלה', desc: 'ניתן להחליף כל פריט תוך 3 ימים מהקבלה' },
         { icon: '🎧', title: 'שירות לקוחות מהיר', desc: 'הצוות שלנו זמין לענות במהירות בוואטסאפ' },
         { icon: '✅', title: 'איכות מובטחת', desc: 'אנחנו בוחרים את הפריטים מהמותגים והמפעלים הטובים ביותר' },
-        { icon: '🚚', title: 'משלוח מהיר', desc: 'לכל אזורי הגדה תוך 1-3 ימי עסקים' },
+        { icon: '🚚', title: 'משלוח מהיר', desc: 'לכל אזורי ישראל תוך 1-3 ימי עסקים' },
     ],
     heroSlides: [
         { title: 'הטרנדים האחרונים באופנה', subtitle: 'קולקציה חדשה של בגדים ונעליים כל שבוע', cta: 'לקנייה עכשיו' },
         { title: 'הנחות עד 30%', subtitle: 'על קולקציה נבחרת מהמותגים הטובים ביותר', cta: 'לצפייה במבצעים' },
-        { title: 'משלוח מהיר עד הבית', subtitle: 'לכל אזורי הגדה המערבית תוך 1-3 ימי עסקים', cta: 'התחילו לקנות' },
+        { title: 'משלוח מהיר עד הבית', subtitle: 'לכל אזורי ישראל תוך 1-3 ימי עסקים', cta: 'התחילו לקנות' },
     ],
 };
 
@@ -211,6 +241,21 @@ const en = {
 
     wishlistTitle: 'Wishlist',
     wishlistEmpty: "You haven't added anything to your wishlist yet",
+
+    dashboardTooltip: 'Dashboard',
+    loginTooltip: 'Login',
+    logout: '🚪 Logout',
+    soldOutLabel: 'Out of stock',
+    lowStockLabel: (n) => `⚠️ Only ${n} left!`,
+    lowStockPiecesLabel: (n) => `⚠️ Only ${n} left!`,
+    invalidCoupon: 'Invalid discount code',
+    accountCreatedNote: 'We automatically created an account for you — your phone number is the password to log in later 🔑',
+    privateCouponLabel: (typeIsPercent, value) => `🎁 You have a special discount ${typeIsPercent ? `${value}%` : `${value}₪`}!`,
+    activate: 'Activate',
+    couponAppliedLabel: (code, discount) => `🎟️ ${code} — ${discount}₪ off`,
+    couponPlaceholder: 'Discount code (optional)',
+    apply: 'Apply',
+    storeTitle: 'Store',
 
     installTitle: 'Install the look.141 app',
     installShareLabel: 'Share',

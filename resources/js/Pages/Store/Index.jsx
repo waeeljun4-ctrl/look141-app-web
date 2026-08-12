@@ -30,9 +30,10 @@ function ThemeToggle() {
 
 function AdminLink() {
     const { auth } = usePage().props;
+    const { t } = useLocale();
     if (auth?.user?.role !== 'admin') return null;
     return (
-        <a href={route('admin.dashboard')} title="لوحة التحكم"
+        <a href={route('admin.dashboard')} title={t('dashboardTooltip')}
             className="w-9 h-9 rounded-xl bg-cream-2 dark:bg-ink-2 border border-cream-3 dark:border-white/10 flex items-center justify-center text-sm text-ink dark:text-cream hover:bg-accent-pale hover:border-accent hover:text-accent transition-colors shrink-0">
             ⚙️
         </a>
@@ -41,12 +42,13 @@ function AdminLink() {
 
 function AccountLink() {
     const { auth } = usePage().props;
+    const { t } = useLocale();
     const [open, setOpen] = useState(false);
     const user = auth?.user;
 
     if (!user) {
         return (
-            <a href="/login" title="تسجيل الدخول"
+            <a href="/login" title={t('loginTooltip')}
                 className="w-9 h-9 rounded-xl bg-cream-2 dark:bg-ink-2 border border-cream-3 dark:border-white/10 flex items-center justify-center text-sm text-ink dark:text-cream hover:bg-accent-pale hover:border-accent hover:text-accent transition-colors shrink-0">
                 👤
             </a>
@@ -70,7 +72,7 @@ function AccountLink() {
                         </div>
                         <Link href="/logout" method="post" as="button"
                             className="w-full text-right px-3.5 py-2.5 text-sm font-bold text-red-500 hover:bg-cream-2 dark:hover:bg-ink transition-colors">
-                            🚪 تسجيل الخروج
+                            {t('logout')}
                         </Link>
                     </div>
                 </>
@@ -120,6 +122,14 @@ const HERO_GRADIENTS = [
     'from-accent via-[#9c6952] to-ink-2',
     'from-ink-2 via-ink to-[#8a5a45]',
 ];
+// Soft blurred glow orbs layered behind the text on plain-gradient slides —
+// same "depth" trick as the product photography, just in the brand's own
+// dark palette instead of switching to a lighter base.
+const HERO_ORBS = [
+    ['bg-accent/25', 'bg-white/10'],
+    ['bg-white/15', 'bg-accent/20'],
+    ['bg-accent/20', 'bg-white/10'],
+];
 
 function HeroSlider({ slides }) {
     const { locale, dict } = useLocale();
@@ -143,17 +153,29 @@ function HeroSlider({ slides }) {
                     const title = localField(s, 'title', locale);
                     const subtitle = localField(s, 'subtitle', locale);
                     const ctaText = localField(s, 'cta_text', locale);
+                    const [orb1, orb2] = HERO_ORBS[i % HERO_ORBS.length];
                     return (
                         <div key={s.id} dir={dict.dir}
                             style={s.image ? { backgroundImage: `linear-gradient(to bottom right, rgba(31,29,27,.75), rgba(31,29,27,.55)), url(/storage/${s.image})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
-                            className={`w-full shrink-0 px-6 py-16 sm:py-24 text-center ${s.image ? '' : `bg-gradient-to-br ${HERO_GRADIENTS[i % HERO_GRADIENTS.length]}`}`}>
-                            <h2 className="text-2xl sm:text-4xl font-black text-white mb-3">{title}</h2>
-                            {subtitle && <p className="text-sm sm:text-base text-white/70 max-w-md mx-auto mb-6 leading-relaxed">{subtitle}</p>}
-                            {ctaText && (
-                                s.cta_link
-                                    ? <a href={s.cta_link} className="inline-block bg-accent text-white font-bold px-6 py-2.5 rounded-xl hover:bg-white hover:text-ink transition-colors">{ctaText}</a>
-                                    : <span className="inline-block bg-accent text-white font-bold px-6 py-2.5 rounded-xl">{ctaText}</span>
+                            className={`relative w-full shrink-0 px-6 py-16 sm:py-24 text-center overflow-hidden ${s.image ? '' : `bg-gradient-to-br ${HERO_GRADIENTS[i % HERO_GRADIENTS.length]}`}`}>
+                            {!s.image && (
+                                <>
+                                    <div className={`absolute -top-16 -end-16 w-72 h-72 rounded-full ${orb1} blur-3xl`} />
+                                    <div className={`absolute -bottom-20 -start-10 w-80 h-80 rounded-full ${orb2} blur-3xl`} />
+                                </>
                             )}
+                            <div className="relative">
+                                <span className="inline-block text-[11px] font-black tracking-[0.2em] uppercase rounded-full px-3 py-1 mb-4 text-white bg-white/15 border border-white/20">
+                                    LOOK.141
+                                </span>
+                                <h2 className="text-3xl sm:text-5xl font-black text-white mb-3 leading-tight">{title}</h2>
+                                {subtitle && <p className="text-sm sm:text-base text-white/70 max-w-md mx-auto mb-7 leading-relaxed">{subtitle}</p>}
+                                {ctaText && (
+                                    s.cta_link
+                                        ? <a href={s.cta_link} className="inline-block bg-accent text-white font-bold px-6 py-2.5 rounded-xl shadow-lg shadow-accent/30 hover:bg-white hover:text-ink hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">{ctaText}</a>
+                                        : <span className="inline-block bg-accent text-white font-bold px-6 py-2.5 rounded-xl shadow-lg shadow-accent/30">{ctaText}</span>
+                                )}
+                            </div>
                         </div>
                     );
                 })}
@@ -161,13 +183,13 @@ function HeroSlider({ slides }) {
             {slides.length > 1 && (
                 <>
                     <button onClick={prev} aria-label="prev"
-                        className="absolute top-1/2 -translate-y-1/2 end-3 w-9 h-9 rounded-full bg-white/15 hover:bg-white/30 text-white flex items-center justify-center backdrop-blur-sm transition-colors">›</button>
+                        className="absolute top-1/2 -translate-y-1/2 end-3 w-10 h-10 rounded-full bg-white/15 hover:bg-white/30 text-white flex items-center justify-center backdrop-blur-md border border-white/20 shadow-sm transition-colors">›</button>
                     <button onClick={next} aria-label="next"
-                        className="absolute top-1/2 -translate-y-1/2 start-3 w-9 h-9 rounded-full bg-white/15 hover:bg-white/30 text-white flex items-center justify-center backdrop-blur-sm transition-colors">‹</button>
-                    <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+                        className="absolute top-1/2 -translate-y-1/2 start-3 w-10 h-10 rounded-full bg-white/15 hover:bg-white/30 text-white flex items-center justify-center backdrop-blur-md border border-white/20 shadow-sm transition-colors">‹</button>
+                    <div className="absolute bottom-5 left-0 right-0 flex justify-center gap-2">
                         {slides.map((_, i) => (
                             <button key={i} onClick={() => setCurrent(i)} aria-label={`slide ${i+1}`}
-                                className={`h-2 rounded-full transition-all ${i === current ? 'bg-white w-6' : 'bg-white/40 w-2'}`} />
+                                className={`h-2 rounded-full transition-all duration-300 ${i === current ? 'bg-white w-7' : 'bg-white/40 w-2'}`} />
                         ))}
                     </div>
                 </>
@@ -176,11 +198,11 @@ function HeroSlider({ slides }) {
     );
 }
 
-function uniqueSizes(variants) {
+function uniqueSizes(variants, oneSizeLabel) {
     const seen = new Set();
     const out = [];
     for (const v of (variants || [])) {
-        const size = v.size || 'مقاس واحد';
+        const size = v.size || oneSizeLabel;
         if (!seen.has(size)) { seen.add(size); out.push(size); }
     }
     return out;
@@ -188,10 +210,11 @@ function uniqueSizes(variants) {
 
 function ProductCard({ product, onOpen }) {
     const { has: inWishlist, toggle: toggleWishlist } = useWishlist();
-    const { locale } = useLocale();
+    const { locale, t } = useLocale();
     const videoRef = useRef(null);
+    const cardRef = useRef(null);
     const [hovering, setHovering] = useState(false);
-    const sizes = uniqueSizes(product.variants);
+    const sizes = uniqueSizes(product.variants, t('oneSize'));
     const discount = product.compare_price && product.compare_price > product.price
         ? Math.round((1 - product.price / product.compare_price) * 100)
         : null;
@@ -217,8 +240,29 @@ function ProductCard({ product, onOpen }) {
         }
     }
 
+    // Touch devices never fire mouseenter/mouseleave — instead, autoplay the
+    // preview video once the card scrolls into view, so a finger swiping
+    // past it on mobile gets the same preview a mouse hover gives on desktop.
+    useEffect(() => {
+        if (!product.video) return;
+        if (typeof window === 'undefined' || !window.matchMedia('(hover: none)').matches) return;
+        const el = cardRef.current;
+        if (!el) return;
+        const observer = new IntersectionObserver(([entry]) => {
+            setHovering(entry.isIntersecting);
+            if (entry.isIntersecting) {
+                videoRef.current?.play().catch(() => {});
+            } else if (videoRef.current) {
+                videoRef.current.pause();
+                videoRef.current.currentTime = 0;
+            }
+        }, { threshold: 0.6 });
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, [product.video]);
+
     return (
-        <div onClick={() => onOpen(product)}
+        <div ref={cardRef} onClick={() => onOpen(product)}
             onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
             className="bg-white dark:bg-ink-2 rounded-2xl overflow-hidden border-[1.5px] border-cream-3 dark:border-white/10 hover:border-accent-light hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
 
@@ -229,7 +273,7 @@ function ProductCard({ product, onOpen }) {
                 }
                 {soldOut && (
                     <div className="absolute inset-0 bg-ink/50 flex items-center justify-center z-10">
-                        <span className="bg-white text-ink text-xs font-black px-3 py-1.5 rounded-full">نفذت الكمية</span>
+                        <span className="bg-white text-ink text-xs font-black px-3 py-1.5 rounded-full">{t('soldOutLabel')}</span>
                     </div>
                 )}
                 {product.video && (
@@ -267,7 +311,7 @@ function ProductCard({ product, onOpen }) {
                     {discount && <span className="text-xs text-muted line-through">{product.compare_price}₪</span>}
                     <span className="text-base font-black text-ink dark:text-cream">{product.price}₪</span>
                 </div>
-                {lowStock && <p className="text-[11px] font-bold text-orange-500 mt-1">باقي {totalStock} فقط!</p>}
+                {lowStock && <p className="text-[11px] font-bold text-orange-500 mt-1">{t('lowStockLabel')(totalStock)}</p>}
             </div>
         </div>
     );
@@ -319,6 +363,7 @@ function StoreContent({ heroSlides, categories, brands, products }) {
 
     return (
         <div className={`min-h-screen bg-cream dark:bg-ink transition-colors ${fontClass}`}>
+            <Head title={t('storeTitle')} />
             {/* Top bar */}
             <div className="bg-ink text-center text-xs py-2 text-white/50 tracking-wide">
                 🚚 {t('topBanner')}
@@ -593,18 +638,15 @@ function FAQ() {
 
 export default function Index({ heroSlides, categories, brands, products }) {
     return (
-        <>
-            <Head title="المتجر" />
-            <ThemeProvider>
-                <LocaleProvider>
-                    <WishlistProvider>
-                        <CartProvider>
-                            <StoreContent heroSlides={heroSlides} categories={categories} brands={brands} products={products} />
-                            <InstallBanner />
-                        </CartProvider>
-                    </WishlistProvider>
-                </LocaleProvider>
-            </ThemeProvider>
-        </>
+        <ThemeProvider>
+            <LocaleProvider>
+                <WishlistProvider>
+                    <CartProvider>
+                        <StoreContent heroSlides={heroSlides} categories={categories} brands={brands} products={products} />
+                        <InstallBanner />
+                    </CartProvider>
+                </WishlistProvider>
+            </LocaleProvider>
+        </ThemeProvider>
     );
 }
