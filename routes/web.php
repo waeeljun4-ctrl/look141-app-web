@@ -30,6 +30,7 @@ use Inertia\Inertia;
 
 // ── PUBLIC STORE ──
 Route::get('/', [StoreController::class, 'index'])->name('home');
+Route::get('/product/{product}', [StoreController::class, 'product'])->name('store.product');
 
 // ── AUTH ──
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login')->middleware('guest');
