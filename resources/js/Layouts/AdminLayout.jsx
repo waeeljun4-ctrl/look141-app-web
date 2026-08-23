@@ -45,7 +45,7 @@ export default function AdminLayout({ children, title }) {
                 transition-transform duration-300 lg:translate-x-0
                 ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}>
                 <div className="p-5 border-b border-white/10">
-                    <p className="text-accent font-black text-lg">look<span className="text-white">.141</span></p>
+                    <p className="text-accent font-black text-lg">Velora<span className="text-white">.141</span></p>
                     <p className="text-white/30 text-xs mt-0.5 tracking-widest">لوحة الإدارة</p>
                 </div>
                 <nav className="flex-1 p-3">

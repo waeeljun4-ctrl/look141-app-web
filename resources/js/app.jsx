@@ -9,7 +9,7 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribut
 if (csrfToken) axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
 
 createInertiaApp({
-    title: (title) => `${title} — look.141`,
+    title: (title) => `${title} — Velora.141`,
     resolve: (name) => {
         const pages = import.meta.glob('./Pages/**/*.jsx', { eager: true });
         return pages[`./Pages/${name}.jsx`];

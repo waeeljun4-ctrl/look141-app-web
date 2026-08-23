@@ -166,7 +166,7 @@ function HeroSlider({ slides }) {
                             )}
                             <div className="relative">
                                 <span className="inline-block text-[11px] font-black tracking-[0.2em] uppercase rounded-full px-3 py-1 mb-4 text-white bg-white/15 border border-white/20">
-                                    LOOK.141
+                                    VELORA.141
                                 </span>
                                 <h2 className="text-3xl sm:text-5xl font-black text-white mb-3 leading-tight">{title}</h2>
                                 {subtitle && <p className="text-sm sm:text-base text-white/70 max-w-md mx-auto mb-7 leading-relaxed">{subtitle}</p>}
@@ -397,7 +397,7 @@ function StoreContent({ heroSlides, categories, brands, products }) {
                         className="bg-transparent outline-none border-0 appearance-none text-sm text-ink dark:text-cream w-full" />
                 </div>
                 <a href="/" className="text-lg font-black text-ink dark:text-cream shrink-0">
-                    look<span className="text-accent">.141</span>
+                    Velora<span className="text-accent">.141</span>
                 </a>
             </nav>
 
@@ -543,7 +543,7 @@ function StoreContent({ heroSlides, categories, brands, products }) {
 
             {/* Footer */}
             <footer className="bg-ink px-4 py-10 text-center">
-                <p className="font-black text-accent text-xl mb-1">look.141</p>
+                <p className="font-black text-accent text-xl mb-1">Velora.141</p>
                 <p className="text-white/40 text-xs mb-6 leading-relaxed">{t('footerDesc')}</p>
                 <div className="flex flex-wrap justify-center gap-3 mb-5">
                     {siteSettings?.whatsapp_number && (

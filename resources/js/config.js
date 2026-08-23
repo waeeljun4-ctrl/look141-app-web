@@ -2,7 +2,7 @@
 export const waMsg = (productName, size, price) => {
     const sizeStr = size ? `\n- المقاس: ${size}` : '';
     const priceStr = price ? `\n- السعر: ${price}₪` : '';
-    return `مرحباً look.141 👋\nأريد الاستفسار عن:\n- المنتج: ${productName}${sizeStr}${priceStr}\n\nبانتظار ردّكم 🙏`;
+    return `مرحباً Velora.141 👋\nأريد الاستفسار عن:\n- المنتج: ${productName}${sizeStr}${priceStr}\n\nبانتظار ردّكم 🙏`;
 };
 
 // ── رقم الواتساب يأتي الآن من إعدادات الأدمن (siteSettings.whatsapp_number) وليس ثابتاً هنا

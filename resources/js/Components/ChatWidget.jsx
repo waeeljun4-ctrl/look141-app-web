@@ -12,7 +12,7 @@ const QUICK_QUESTIONS = [
 export default function ChatWidget() {
     const [open, setOpen] = useState(false);
     const [messages, setMessages] = useState([
-        { role: 'assistant', content: 'أهلاً! أنا مساعد look.141 🌟\nكيف أقدر أساعدك اليوم؟' }
+        { role: 'assistant', content: 'أهلاً! أنا مساعد Velora.141 🌟\nكيف أقدر أساعدك اليوم؟' }
     ]);
     const [input, setInput] = useState('');
     const [loading, setLoading] = useState(false);
@@ -78,7 +78,7 @@ export default function ChatWidget() {
                     <div className="bg-ink px-4 py-3 flex items-center gap-3 shrink-0">
                         <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center text-white font-black text-sm shrink-0">ل</div>
                         <div>
-                            <p className="text-white font-bold text-sm">مساعد look.141</p>
+                            <p className="text-white font-bold text-sm">مساعد Velora.141</p>
                             <p className="text-white/40 text-xs">متصل الآن</p>
                         </div>
                     </div>

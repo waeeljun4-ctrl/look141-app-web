@@ -22,7 +22,7 @@ export default function Login() {
                     {/* Logo */}
                     <div className="text-center mb-8">
                         <h1 className="text-2xl font-black text-ink">
-                            look<span className="text-accent">.141</span>
+                            Velora<span className="text-accent">.141</span>
                         </h1>
                         <p className="text-xs text-muted mt-1 tracking-widest">لوحة الإدارة</p>
                     </div>

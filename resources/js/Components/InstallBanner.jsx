@@ -41,7 +41,7 @@ export default function InstallBanner() {
     return (
         <div className="fixed bottom-0 left-0 right-0 z-50 p-3 sm:p-4" style={{ direction: dict.dir }}>
             <div className="bg-ink text-white rounded-2xl px-4 py-3.5 flex items-center gap-3 shadow-2xl max-w-lg mx-auto">
-                <img src="/icon-192.png" alt="look.141" className="w-11 h-11 rounded-xl shrink-0" />
+                <img src="/icon-192.png" alt="Velora.141" className="w-11 h-11 rounded-xl shrink-0" />
                 <div className="flex-1 min-w-0">
                     <p className="font-bold text-sm leading-tight">{t('installTitle')}</p>
                     {isIOS

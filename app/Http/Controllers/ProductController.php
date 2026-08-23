@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Services\ImageCompressionService;
+use App\Services\TranslationService;
 use App\Services\VideoCompressionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -83,7 +84,7 @@ class ProductController extends Controller
         ];
     }
 
-    private function syncVariants(Product $product, ?array $variants): void
+    private function syncVariants(Product $product, ?array $variants, TranslationService $translator): void
     {
         $keepIds = [];
 
@@ -91,8 +92,8 @@ class ProductController extends Controller
             $payload = [
                 'size'       => $variant['size']       ?? null,
                 'color'      => $variant['color']      ?? null,
-                'color_he'   => $variant['color_he']   ?? null,
-                'color_en'   => $variant['color_en']   ?? null,
+                'color_he'   => $translator->translate($variant['color'] ?? null, 'he'),
+                'color_en'   => $translator->translate($variant['color'] ?? null, 'en'),
                 'color_hex'  => $variant['color_hex']  ?? null,
                 'stock'      => $variant['stock']       ?? 0,
                 'sku'        => $variant['sku']        ?: null,
@@ -110,11 +111,16 @@ class ProductController extends Controller
         $product->variants()->whereNotIn('id', $keepIds)->delete();
     }
 
-    public function store(Request $request, ImageCompressionService $imageCompressor, VideoCompressionService $videoCompressor)
+    public function store(Request $request, ImageCompressionService $imageCompressor, VideoCompressionService $videoCompressor, TranslationService $translator)
     {
         $data = $request->validate($this->validateFields());
         $variants = $data['variants'] ?? null;
         unset($data['variants']);
+
+        $data['name_he'] = $translator->translate($data['name'], 'he');
+        $data['name_en'] = $translator->translate($data['name'], 'en');
+        $data['description_he'] = $translator->translate($data['description'] ?? null, 'he');
+        $data['description_en'] = $translator->translate($data['description'] ?? null, 'en');
 
         if ($request->hasFile('image')) {
             $data['image'] = $imageCompressor->compressAndStore($request->file('image'), 'products');
@@ -131,7 +137,7 @@ class ProductController extends Controller
         unset($data['new_images']);
 
         $product = Product::create($data);
-        $this->syncVariants($product, $variants);
+        $this->syncVariants($product, $variants, $translator);
         $this->syncStockTracking($product, $variants);
 
         return back()->with('success', 'تم إضافة المنتج ✅');
@@ -151,11 +157,16 @@ class ProductController extends Controller
         }
     }
 
-    public function update(Request $request, Product $product, ImageCompressionService $imageCompressor, VideoCompressionService $videoCompressor)
+    public function update(Request $request, Product $product, ImageCompressionService $imageCompressor, VideoCompressionService $videoCompressor, TranslationService $translator)
     {
         $data = $request->validate($this->validateFields());
         $variants = $data['variants'] ?? null;
         unset($data['variants']);
+
+        $data['name_he'] = $translator->translate($data['name'], 'he');
+        $data['name_en'] = $translator->translate($data['name'], 'en');
+        $data['description_he'] = $translator->translate($data['description'] ?? null, 'he');
+        $data['description_en'] = $translator->translate($data['description'] ?? null, 'en');
 
         if ($request->hasFile('image')) {
             if ($product->image) Storage::disk('public')->delete($product->image);
@@ -175,7 +186,7 @@ class ProductController extends Controller
         unset($data['new_images']);
 
         $product->update($data);
-        $this->syncVariants($product, $variants);
+        $this->syncVariants($product, $variants, $translator);
         $this->syncStockTracking($product, $variants);
 
         return back()->with('success', 'تم تحديث المنتج ✅');
